@@ -22,3 +22,28 @@
         $（document.body）.on（'单击'，'#a.b'，函数（）{
     而是使用
         $（'#a'）.on（'单击'，'.b'，函数（）{ # jQuery
+
+## 1.4. css @page规则控制打印设置选项 
+        http://www.softwhy.com/article-5613-1.html
+    在打印的时候可以对页面设置两种css，一种用于显示，一种用于打印，打印的文件要带有media="print"属性
+        <link href="/css/sendoc.print.css" rel="stylesheet" media="print">
+
+        //设置网页打印的页眉页脚为空 ，仅IE浏览器可用
+        function PageSetup_Null(){
+        	var hkey_root, hkey_path, hkey_key;
+        	hkey_path = "HKEY_CURRENT_USER\\Software\\Microsoft\\Internet Explorer\\PageSetup\\";
+            try{
+            	var RegWsh = new ActiveXObject("WScript.Shell");
+            	RegWsh.RegWrite(hkey_path + "header", "");		//设置页眉为空
+            	RegWsh.RegWrite(hkey_path + "footer", ""); 		//设置页脚为空
+            	RegWsh.RegWrite(hkey_path + "margin_left", "0.0");
+            	RegWsh.RegWrite(hkey_path + "margin_right", "0.0");
+            	RegWsh.RegWrite(hkey_path + "margin_top", "0.0");
+            	RegWsh.RegWrite(hkey_path + "margin_bottom", "0.0");
+            	/*设置横向打印*/
+            	RegWsh.sendKeys('%fu');
+        		RegWsh.sendKeys('%a');
+        		RegWsh.sendKeys('{ENTER}');
+            }catch(e)
+            {}
+        }
